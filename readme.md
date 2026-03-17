@@ -1,114 +1,93 @@
---DSA
-    1. SORTING ALGORITHMS:
-        --- Bubble Sort: In this algorithm we sort number by going firt element as max and check there next number is lessthan first number then swap them, do this until all number are not sorted.
-        - Also additional check if swap not happen then break the loop, because number sorted, 
-        >> if num[j] > num[j+1]:
-                do swap.
-                swap = True
-        
-        --- Insertion Sort: We took the number and put them at there right place. It's mean we assumed first elemnt is sorted because only one elment, we define key=i where i start from 2nd element of array and j=i-1.
-        - we roll loop from first element and check array sorted by considering first and second element, while loop J is greater than 0 and num[j]>key then num[j+1] = num[j] j-=1.
-        - num[j+1] = key
+# Data Structures and Algorithms (DSA) Notes
 
-        --- Selection Sort: Here we go with first take either min or max from numbers, taking min of nums[i] and took idx=i,second loop start from first index and check current number is less than minimum then make minimum mn=num[j] inx=j and swap them. 
+A comprehensive guide to fundamental sorting, searching, and linked list algorithms.
 
-        --- Merge Sort: this worked on revursive call and merging element, like first we took l as first element and r as last element of list, in mergeSort we call the recursive function like mergeSort(nums,l,mid,r) mid is //2 of l and r.
+---
 
-        after recursive call l part is l to mid+1 and r part is mid+1 to r is sorted but now another function call here is merge them, for this we used to empty list likewise a and b, now store element l to mid+1 into a and in b mid+1 to r.
-        - here also we decalare i,j,k=0,0,l
-        for merging we use the if cases like if j==len(b) then took nums[k]=a[i] i+=1 k+=1
-        elif i==len(a) then nums[k]=b[j],j+=1,k+=1
-        elif a[i] < b[j]: nums[k] = a[i], i+=1,k+=1
-        else nums[k]=b[j],j+=1,k+=1 
+## 1. Sorting Algorithms
 
-        this how sort and merge works.
+### Bubble Sort
+In this algorithm, we sort numbers by treating the first element as the maximum and checking if the next number is less than the current number; if so, we swap them. This continues until all numbers are sorted.
+* **Optimization:** Include a check to see if a swap happened. If no swap occurs in a pass, break the loop because the array is already sorted.
+* **Logic:**
+    ```python
+    if num[j] > num[j+1]:
+        # do swap
+        swapped = True
+    ```
 
-        --- Quick Sort: this work like merge but here we find the partiction point with help of them there left element is lesser and right elem is greater than it. so by using quickSort recursion call with help of partion function which return partiton point.
-        - in function we took start point and key which anything but prefered last elem, then nums[i] <= key: swap nums[i] with nums[start] start+=1 and return start - 1 
-        - in quickSort recursive call function p=partion(nums,l,r) and 
-        - quickSort(nums,l,p-1) and quickSort(nums,p+1,r)
+### Insertion Sort
+We take a number and put it in its right place. We assume the first element is sorted (as it is only one element). We define `key = i` where `i` starts from the 2nd element, and `j = i - 1`.
+* **Logic:** While `j >= 0` and `num[j] > key`, we shift elements: `num[j+1] = num[j]`, then `j -= 1`. Finally, `num[j+1] = key`.
 
-        --- Count Sort: in this sorting we first count the frequency of each element and also first take max number of arr and freq=[0]*(mx+1) define the array with by default 0 and run the loop for the count the freq. of each number 
-        -for i in nums: freq[i]+=1
-        -nums = []
-        now sort the array  
-        -for i in range(0,mx+1): while frq[i]>0: nums.append(i) freq+=1 return nums qith sorted
-        -- this has best TM but here number limit because if [1,100000] then freq array created with len of 100001
-
-
-        ---- Stable and Unstabe algorithm: 
-        -- like [5,1,2,4,3,5,6] = here if same number so during the sorting first 5 come first and then second [1,2,3,4,5,5,6] and if second come first and first after then that wes unsatble algorithm.
-
-        --- Adaptive and non-adaptive algorithm: If array is almost sorted only one elem is not in right place then took less time is called adptive algo and if whatever case it goes pre defined steps is non-adaptive algo.
-
-        --- Inplace Algo: Which algo not take extra spaces.
+### Selection Sort
+We find either the minimum or maximum from the numbers.
+* **Logic:** Take the minimum of `nums[i]` and store the index. A second loop checks if the current number is less than the minimum; if so, update the minimum and swap them.
 
 
 
-** Search Algorithms:
-    --- Linear Search: We search the algorithm from starting to end or target point, if nums[i]==target then return the index or number found, this how linear search algorithms work but if number of elem. is more then this algorithm is not effective as we need.
+### Merge Sort
+Works on recursive calls and merging elements. We take `l` as the first index and `r` as the last.
+* **Logic:** `mergeSort(nums, l, mid, r)` where `mid = (l + r) // 2`.
+* **Merging:** After recursive calls, the left and right parts are sorted. We use two empty lists, `a` and `b`, to store elements. We then use pointers `i, j, k` to merge them back into `nums` by comparing `a[i]` and `b[j]`.
 
-    --- Binary Search:
-        -  This is effective and less TM nlogn, we took l, mid, and right point. what we do is run the loop until l<=r and check condition like if mid is equal to target then return mid, elif target>nums[mid] then l=mid+1 so we consider only right part at this point and if target<nums[mid] then we consider only the left part and r=mid-1 and outof loop return -1 if no found of number in list.
+### Quick Sort
+Similar to Merge Sort but uses a **partition point**. Elements to the left are lesser and elements to the right are greater than the pivot.
+* **Partition Logic:** Use a `key` (often the last element). If `nums[i] <= key`, swap `nums[i]` with `nums[start]` and increment `start`.
+* **Recursion:** `p = partition(nums, l, r)`, then call `quickSort(nums, l, p-1)` and `quickSort(nums, p+1, r)`.
 
-    --- Lower bound: It's give the first index elem that is >= to target, 
-        - e.g. [0,1,2,5,12,18,60] target=12 then here LB = 4, if target 14 then LB = 5
-        Find the LB, if nums[mid] >= target: ans=mid, r=mid-1 and here default val;ue of 
-        ans=len(nums), else l=mid+1
+### Count Sort
+First, count the frequency of each element.
+* **Logic:** Find the max number (`mx`). Create `freq = [0] * (mx + 1)`. 
+* **Process:** For each `i` in `nums`, `freq[i] += 1`. Then, rebuild the array: `for i in range(0, mx + 1): while freq[i] > 0: nums.append(i)`.
+* **Note:** Has the best Time Complexity, but is limited by the range of numbers (e.g., if the range is 1 to 100,000, the frequency array becomes very large).
 
-    --- Upper Bound: It's give the first index of elem that > target, here not consider the =.
+---
 
-    ** If Number is not present in arry then lower bound and upper bound are same for both cases **
+## Sorting Classifications
 
+* **Stable vs. Unstable:** In a **Stable** algorithm, if two numbers are the same (e.g., two 5s), their original relative order is preserved after sorting. In **Unstable**, their order might change.
+* **Adaptive vs. Non-Adaptive:** An **Adaptive** algorithm takes less time if the array is already almost sorted. A **Non-Adaptive** algorithm follows the same predefined steps regardless of the initial order.
+* **In-place Algorithm:** An algorithm that does not require extra space.
 
+---
 
+## 2. Search Algorithms
 
+### Linear Search
+We search through the array from start to end. If `nums[i] == target`, return the index. It is simple but not effective for large datasets.
 
-    ----- Linked List -----:
-        -- Linked list is basically chain of node where each node contain informarion such as data and pointer to the next node in each chain.
-
-        -- Now for creating Linked list you have to define the Node class then after create the node objects which you want to consider as List, and connect them.
-        class Node:
-            def __init__(self,data):
-                slef.data = data
-                self.next = None
-
-        a = Node(2)
-        b = Node(3)
-        c = Node(54)
-
-        a.next=b
-        b.next=c
-        this how linked list created.
-
-        --Linked list Traverse (Traverse means how to iterate throgh node )
-            - for doing this we defined head in code, head is starting number of linked list, head=a, 
-            - For traverse the list we took the variable curr = head and
-                -- while curr!=None:
-                    print(curr.data)
-                    curr = curr.next 
-        
-            -- Insertion of Node at beginning: newNode = Node(10), newNode.next = head,head=newNode
-            -- Insertion of Node at end: newNode = node(20), while curr.next!=None: 
-            curr = curr.next  by doing this your curr at last elem of list
-            curr.next  = newNode
-            --- Insertion of Node at kth index: 
-            - Doing this you have to come k-1 index by using for i in range(k-1): 
-            curr=curr.next and then newNode.next = curr.next first connect newnode with next element and then curr.next = newNode.
-
-            -- Deletion of First node or Head: head = head.next, by doing this your head start from second elem and also first node deleted form Linked List.
-            -- Deletion of last node: Come at the second last of node, while curr.next.next != None: curr = curr.next and out of loop curr.next = None.
-            -- Deletion kth Node: come at the k-1 index and out of loop do curr.next = curr.next.next.
+### Binary Search
+Highly effective with $O(\log n)$ time complexity. Requires a sorted array.
+* **Logic:** Use `l`, `mid`, and `r`. While `l <= r`:
+    * If `nums[mid] == target`, return `mid`.
+    * If `target > nums[mid]`, search the right part (`l = mid + 1`).
+    * If `target < nums[mid]`, search the left part (`r = mid - 1`).
 
 
-            ---Doubly Linked List: In this list node connected with there next node and also with PREV. node.
-            --- Circular List: In this list node connected with circular manner suppose C is last node then it can be connected with first or second elment.
 
+### Lower Bound & Upper Bound
+* **Lower Bound:** The first index where the element is $\ge$ target.
+    * *Example:* `[0,1,2,5,12,18,60]`, target=12 $\rightarrow$ LB=4. Target=14 $\rightarrow$ LB=5.
+* **Upper Bound:** The first index where the element is $>$ target (does not consider equal).
+* **Note:** If the number is not present in the array, the Lower Bound and Upper Bound results are the same.
 
-            --- Finding the Middle of Linked List -- There are two ways to find the middle of Linked list: by finding the length of list and then run the loop l//2 you got the middle of list.
-            - By using the slow and fast pointer, Suppose one track where fast running is 10km/h and slow 5km/h, so if fast reached the end then slow at middle of track, just like in list: 
-                - slow=head, fast=head 
-                    while fast.next!=None and fast!=None:
-                        slow = slow.next 
-                        fast = fast.next.next
-                    return slow
+---
+
+## 3. Linked List
+
+A Linked List is a chain of nodes where each node contains data and a pointer to the next node.
+
+### Structure
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Creation
+a = Node(2)
+b = Node(3)
+c = Node(54)
+a.next = b
+b.next = c
