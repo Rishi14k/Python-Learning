@@ -91,3 +91,90 @@ b = Node(3)
 c = Node(54)
 a.next = b
 b.next = c
+
+
+
+## 🔗 Linked List Operations
+
+A **Linked List** is a chain of nodes where each node contains information such as **data** and a **pointer** to the next node in the chain.
+
+### 1. Node Structure & Creation
+To create a Linked List, you first define a `Node` class and then connect the objects.
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Creating nodes
+a = Node(2)
+b = Node(3)
+c = Node(54)
+
+# Connecting nodes (Creating the chain)
+a.next = b
+b.next = c
+# head = a
+```
+
+### 2. Traversal
+Traversing means iterating through every node in the list starting from the **head**.
+
+* **Logic:** Use a temporary variable `curr` to move through the list until you reach `None`.
+* **Code:**
+    ```python
+    curr = head
+    while curr != None:
+        print(curr.data)
+        curr = curr.next 
+    ```
+
+---
+
+### 3. Insertion Operations
+
+| Type | Logic |
+| :--- | :--- |
+| **At Beginning** | `newNode.next = head`, then update `head = newNode`. |
+| **At End** | Traverse until `curr.next == None`, then set `curr.next = newNode`. |
+| **At Kth Index** | Traverse to the `k-1` index. Connect `newNode.next = curr.next`, then update `curr.next = newNode`. |
+
+
+
+---
+
+### 4. Deletion Operations
+
+* **Delete Head (First Node):** Move the head pointer to the second element.
+    * `head = head.next`
+* **Delete Last Node:** Traverse until you reach the second-to-last node.
+    * `while curr.next.next != None: curr = curr.next`
+    * `curr.next = None`
+* **Delete Kth Node:** Traverse to the `k-1` index.
+    * `curr.next = curr.next.next`
+
+
+
+---
+
+### 5. Advanced Types & Techniques
+
+#### Doubly & Circular Lists
+* **Doubly Linked List:** Each node is connected to the **Next** node and also the **Previous (PREV)** node.
+* **Circular List:** The nodes are connected in a circular manner; for example, the last node `C` connects back to the first or second element instead of `None`.
+
+#### Finding the Middle (Slow & Fast Pointer)
+There are two main ways to find the middle of a list:
+1.  **Length Method:** Find the total length, then run a loop to `length // 2`.
+2.  **Slow/Fast Method:** Think of a track where one runner is twice as fast. When the fast runner reaches the end, the slow runner is exactly at the middle.
+
+**Logic:**
+```python
+slow = head
+fast = head 
+while fast != None and fast.next != None:
+    slow = slow.next      # moves 1 step
+    fast = fast.next.next # moves 2 steps
+return slow # This is the middle node
+```
